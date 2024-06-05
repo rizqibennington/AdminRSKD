@@ -28,25 +28,28 @@ class ObatController extends BaseController
         // exit();
 
         if ($file->isValid() && !$file->hasMoved()) {
-            if ($file->getSize() <= 5 * 1024 * 1024) { // 5 MB in bytes
-                $newName = $file->getRandomName();
-                $file->move(WRITEPATH . 'uploads', $newName);
+            if ($file->getMimeType() == 'application/pdf') {
+                if ($file->getSize() <= 5 * 1024 * 1024) { // 5 MB in bytes
+                    $newName = $file->getRandomName();
+                    $file->move(WRITEPATH . 'uploads', $newName);
 
+                    $filepath =  $newName;
 
-                $filepath =  $newName;
+                    $this->obat->insert([
+                        'nama_perusahaan' => $this->request->getPost('nama_perusahaan'),
+                        'nama_obat' => $this->request->getPost('nama_obat'),
+                        'bentuk' => $this->request->getPost('bentuk'),
+                        'tujuan' => $this->request->getPost('tujuan'),
+                        'uraian' => $this->request->getPost('uraian'),
+                        'filepath' => $filepath,
+                    ]);
 
-                $this->obat->insert([
-                    'nama_perusahaan' => $this->request->getPost('nama_perusahaan'),
-                    'nama_obat' => $this->request->getPost('nama_obat'),
-                    'bentuk' => $this->request->getPost('bentuk'),
-                    'tujuan' => $this->request->getPost('tujuan'),
-                    'uraian' => $this->request->getPost('uraian'),
-                    'filepath' => $filepath,
-                ]);
-
-                return redirect()->to('obat')->with('success', 'Data Added Successfully');
+                    return redirect()->to('obat')->with('success', 'Data Added Successfully');
+                } else {
+                    return redirect()->to('obat')->with('error', 'File size exceeds 5 MB');
+                }
             } else {
-                return redirect()->to('obat')->with('error', 'File size exceeds 5 MB');
+                return redirect()->to('obat')->with('error', 'Invalid file type. Only PDF files are allowed.');
             }
         } else {
             return redirect()->to('obat')->with('error', 'File upload failed');
@@ -76,12 +79,16 @@ class ObatController extends BaseController
         ];
 
         if ($file && $file->isValid() && !$file->hasMoved()) {
-            if ($file->getSize() <= 5 * 1024 * 1024) { // 5 MB in bytes
-                $newName = $file->getRandomName();
-                $file->move(WRITEPATH . 'uploads', $newName);
-                $updateData['filepath'] = $newName;
+            if ($file->getMimeType() == 'application/pdf') {
+                if ($file->getSize() <= 5 * 1024 * 1024) { // 5 MB in bytes
+                    $newName = $file->getRandomName();
+                    $file->move(WRITEPATH . 'uploads', $newName);
+                    $updateData['filepath'] = $newName;
+                } else {
+                    return redirect()->to('obat')->with('error', 'File size exceeds 5 MB');
+                }
             } else {
-                return redirect()->to('obat')->with('error', 'File size exceeds 5 MB');
+                return redirect()->to('obat')->with('error', 'Invalid file type. Only PDF files are allowed.');
             }
         }
 
@@ -101,6 +108,7 @@ class ObatController extends BaseController
         $this->obat->update($id, ['status' => 2]);
         return redirect()->to('obat')->with('success', 'Status updated to Tolak');
     }
+
     public function delete($id)
     {
         // Check if the ID is valid

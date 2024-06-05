@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 05, 2024 at 10:24 AM
+-- Generation Time: Jun 06, 2024 at 01:11 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -106,7 +106,8 @@ INSERT INTO `auth_logins` (`id`, `ip_address`, `email`, `user_id`, `date`, `succ
 (15, '::1', 'rizqirahmansyah98@gmail.com', 2, '2024-06-05 02:54:24', 1),
 (16, '::1', 'rizqirahmansyah10@gmail.com', 1, '2024-06-05 02:58:55', 1),
 (17, '::1', 'rizqirahmansyah10@gmail.com', 1, '2024-06-05 03:00:34', 1),
-(18, '::1', 'rizqirahmansyah98@gmail.com', 2, '2024-06-05 03:01:52', 1);
+(18, '::1', 'rizqirahmansyah98@gmail.com', 2, '2024-06-05 03:01:52', 1),
+(19, '::1', 'rizqirahmansyah10@gmail.com', 1, '2024-06-05 18:10:23', 1);
 
 -- --------------------------------------------------------
 
@@ -233,7 +234,8 @@ INSERT INTO `obat` (`id`, `nama_perusahaan`, `nama_obat`, `bentuk`, `tujuan`, `u
 (1, 'PT BCA', 'paramex test', 'kapsul', 'anak', 'pakai 3x1', '', '2024-06-05 13:44:52', 2),
 (7, 'Rumah sakit darmais', 'darmais medicine', 'kapsul', 'anak', 'testing', '1717573215_c49131552d4143b51f01.pdf', '2024-06-05 14:18:00', 1),
 (8, 'PT Kimia Farma', 'Paramex', 'Kapsul', 'anak', 'obat kapsul untuk anak', '1717573839_0acefefaa55f6d61fc77.pdf', '2024-06-05 14:50:07', 0),
-(9, 'PT Dharmais', 'Neozep', 'Kapsul', 'jantung', 'obat jantung', '1717574483_7a2eddee42d809f36d2e.pdf', '2024-06-05 15:01:23', 0);
+(9, 'PT Dharmais', 'Neozep', 'Kapsul', 'jantung', 'obat jantung', '1717574483_7a2eddee42d809f36d2e.pdf', '2024-06-05 15:01:23', 0),
+(10, 'PT Dharmais', 'ngetes file', 'ngetes file', 'anak', 'ngetes file', '1717629072_46a90872e3ebcf097a66.pdf', '2024-06-06 06:11:12', 0);
 
 -- --------------------------------------------------------
 
@@ -255,7 +257,7 @@ CREATE TABLE `users` (
   `reset_expires` datetime DEFAULT NULL,
   `activate_hash` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
-  `role` int(11) NOT NULL,
+  `role` int(11) NOT NULL DEFAULT 1,
   `status_message` varchar(255) DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT 0,
   `force_pass_reset` tinyint(1) NOT NULL DEFAULT 0,
@@ -383,7 +385,7 @@ ALTER TABLE `auth_groups`
 -- AUTO_INCREMENT for table `auth_logins`
 --
 ALTER TABLE `auth_logins`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `auth_permissions`
@@ -419,7 +421,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `obat`
 --
 ALTER TABLE `obat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
